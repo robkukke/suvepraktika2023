@@ -4,18 +4,28 @@
   <mat-card>
     <mat-card-title>Checkouts</mat-card-title>
     <mat-card-content>
-      <table mat-table [dataSource]="dataSource">
+      <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
 
         <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
-          <th mat-header-cell *matHeaderCellDef>{{ getDisplayHeading(column) }}</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ getDisplayHeading(column) }}</th>
           <!-- If the element is a book object, then it only returns the book's title, not the entire object. -->
           <td mat-cell *matCellDef="let element">{{ column === 'borrowedBook' ? element[column].title : element[column] }}</td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;" matSortHeaderRow></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/checkout', row.id]"></tr>
 
       </table>
+
+      <mat-paginator
+        *ngIf="checkouts$ | async as checkouts"
+        (page)="handlePageEvent($event)"
+        [length]="checkouts.totalElements"
+        [pageIndex]="pageRequest.pageIndex"
+        [pageSize]="pageRequest.pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        [showFirstLastButtons]="showFirstLastButtons">
+      </mat-paginator>
     </mat-card-content>
   </mat-card>
 </div>

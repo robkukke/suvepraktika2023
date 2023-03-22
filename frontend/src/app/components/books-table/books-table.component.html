@@ -9,17 +9,29 @@
   <mat-card>
     <mat-card-title>Books</mat-card-title>
     <mat-card-content>
-      <table mat-table [dataSource]="dataSource">
+      <!-- Help received from documentation and examples: https://material.angular.io/components/sort/overview -->
+      <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
 
         <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
-          <th mat-header-cell *matHeaderCellDef [ngClass]="'capitalize'">{{ column }}</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'capitalize'">{{ column }}</th>
           <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;" matSortHeaderRow></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/books', row.id]"></tr>
 
       </table>
+
+      <!-- Help received from documentation and examples: https://material.angular.io/components/paginator/overview -->
+      <mat-paginator
+        *ngIf="books$ | async as books"
+        (page)="handlePageEvent($event)"
+        [length]="books.totalElements"
+        [pageIndex]="pageRequest.pageIndex"
+        [pageSize]="pageRequest.pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        [showFirstLastButtons]="showFirstLastButtons">
+      </mat-paginator>
     </mat-card-content>
   </mat-card>
 </div>
