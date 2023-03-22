@@ -1,0 +1,25 @@
+<!--
+  Help received from documentation and examples: https://material.angular.io/components/table/overview
+
+  Mimics the original books list, using mat-table and *ngFor to generate the table, columns and content.
+  [routerLink] for the ability to open each book on a separate page, with some SCSS additions to make it more clear.
+-->
+
+<div class="container mat-elevation-z4">
+  <mat-card>
+    <mat-card-title>Books</mat-card-title>
+    <mat-card-content>
+      <table mat-table [dataSource]="dataSource">
+
+        <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+          <th mat-header-cell *matHeaderCellDef [ngClass]="'capitalize'">{{ column }}</th>
+          <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/books', row.id]"></tr>
+
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>
