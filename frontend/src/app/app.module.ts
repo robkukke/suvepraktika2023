@@ -8,6 +8,8 @@ import { MaterialModule } from './material/material.module';
 // import { BooksListComponent } from './components/books-list/books-list.component';
 import { BookDetailComponent } from './components/book-detail/book-detail.component';
 import { BooksTableComponent } from './components/books-table/books-table.component';
+import { CheckoutDetailComponent } from './components/checkout-detail/checkout-detail.component';
+import { CheckoutsTableComponent } from './components/checkouts-table/checkouts-table.component';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -15,7 +17,9 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     // BooksListComponent,
     BookDetailComponent,
-    BooksTableComponent
+    BooksTableComponent,
+    CheckoutDetailComponent,
+    CheckoutsTableComponent
   ],
   imports: [
     BrowserModule,
