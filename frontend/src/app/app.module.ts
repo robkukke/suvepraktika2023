@@ -5,15 +5,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
-import { BooksListComponent } from './components/books-list/books-list.component';
+// import { BooksListComponent } from './components/books-list/books-list.component';
 import { BookDetailComponent } from './components/book-detail/book-detail.component';
+import { BooksTableComponent } from './components/books-table/books-table.component';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    BooksListComponent,
-    BookDetailComponent
+    // BooksListComponent,
+    BookDetailComponent,
+    BooksTableComponent
   ],
   imports: [
     BrowserModule,
