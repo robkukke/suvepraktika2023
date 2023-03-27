@@ -13,7 +13,7 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;" matSortHeaderRow></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/checkout', row.id]"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/checkouts', row.id]"></tr>
 
       </table>
 
