@@ -9,6 +9,12 @@
   <mat-card>
     <mat-card-title>Books</mat-card-title>
     <mat-card-content>
+      <div class="search">
+        <mat-form-field>
+          <input matInput type="text" placeholder="Search" [(ngModel)]="searchTerm">
+        </mat-form-field>
+      </div>
+
       <!-- Help received from documentation and examples: https://material.angular.io/components/sort/overview -->
       <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
 

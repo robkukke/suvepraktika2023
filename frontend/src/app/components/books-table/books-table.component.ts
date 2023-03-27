@@ -32,6 +32,9 @@ export class BooksTableComponent implements OnInit {
     pageSize: 25
   };
 
+  // Variable to hold the term inserted into the search field.
+  searchTerm = '';
+
   constructor(
     private bookService: BookService,
   ) {
@@ -40,11 +43,38 @@ export class BooksTableComponent implements OnInit {
   ngOnInit(): void {
     this.books$ = this.bookService.getBooks(this.pageRequest);
 
+    // Method to only show books that have a criteria matching the searchTerm.
+    const filterBooks = (books: Book[]) => {
+      const searchText = this.searchTerm.toLowerCase();
+
+      return books.filter((book: Book) => {
+        return book.title.toLowerCase().includes(searchText) ||
+               book.author.toLowerCase().includes(searchText) ||
+               book.genre.toLowerCase().includes(searchText) ||
+               book.year.toString().includes(searchText) ||
+               book.status.toLowerCase().includes(searchText);
+      });
+    };
+
     // Converts a page of books into a suitable array for mat-table to use as a dataSource.
+    // Help received from: https://www.angularjswiki.com/material/mat-table-filterpredicate/
     this.books$.subscribe(page => {
-      const bookArray = page.content;
+      const bookArray = filterBooks(page.content);
       this.dataSource = new MatTableDataSource(bookArray);
+      this.dataSource.filterPredicate = (data: Book, filter: string) => {
+        return filterBooks([data]).length > 0;
+      };
     });
+
+    // Listen for changes to searchTerm and update the mat-table dataSource.
+    const searchInput = document.querySelector('input[matInput][type="text"]');
+    if (searchInput) {
+      searchInput.addEventListener('keyup', () => {
+        const filteredBooks = filterBooks(this.dataSource.data);
+        this.dataSource.filter = this.searchTerm.toLowerCase();
+        this.dataSource.data = filteredBooks;
+      });
+    }
 
   }
 
